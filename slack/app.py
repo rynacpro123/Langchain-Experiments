@@ -74,21 +74,6 @@ def handle_mentions(body, say):
     response = draft_email(text)
     say(response)
 
-
-# demo1
-@flask_app.route("/slack/events", methods=["POST"])
-@require_slack_verification
-def slack_events():
-    """
-    Route for handling Slack events.
-    This function passes the incoming HTTP request to the SlackRequestHandler for processing.
-
-    Returns:
-        Response: The result of handling the request.
-    """
-    return handler.handle(request)
-
-
 signature_verifier = SignatureVerifier(SLACK_SIGNING_SECRET)
 
 def require_slack_verification(f):
@@ -117,6 +102,12 @@ def verify_slack_request():
         timestamp=timestamp,
         signature=signature,
     )
+
+
+@flask_app.route("/slack/events", methods=["POST"])
+@require_slack_verification
+def slack_events():
+    return handler.handle(request)
 
 # Run the Flask app
 if __name__ == "__main__":
