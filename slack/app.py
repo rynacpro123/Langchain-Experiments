@@ -103,7 +103,7 @@ def verify_slack_request():
         signature=signature,
     )
 
-# Demo kick3
+# Demo kick4
 @flask_app.route("/slack/events", methods=["POST"])
 @require_slack_verification
 def slack_events():
